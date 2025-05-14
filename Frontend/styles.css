@@ -3,3 +3,7 @@
  background-color: black;
  color: aqua;
 }
+
+.miTabla thead + tbody {
+  border-top: none;
+}
