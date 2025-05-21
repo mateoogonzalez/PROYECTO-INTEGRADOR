@@ -1,5 +1,5 @@
 CREATE TABLE ArmEsp (
-    IdArmEsp INT PRIMARY KEY,
-    Abreviatura VARCHAR (50),
-    ArmEspCompleto VARCHAR (100)
+    id_armesp INT PRIMARY KEY,
+    abreviatura VARCHAR (50),
+    armesp_completo VARCHAR (100)
 );

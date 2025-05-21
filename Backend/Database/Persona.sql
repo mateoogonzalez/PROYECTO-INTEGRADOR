@@ -1,12 +1,10 @@
-create table Persona (
-    IdPersona INT PRIMARY KEY,
-    IdGrado INT,
-    IdArmEsp INT,
-    Nombre VARCHAR (100),
-    SegundoNombre VARCHAR (100),
-    Apellido VARCHAR (100),
-    TipoDni VARCHAR (20),
-    NroDni VARCHAR (20),
-    FOREIGN KEY (IdGrado) REFERENCES Grado (IdGrado),
-    FOREIGN KEY (IdArmEsp) REFERENCES ArmEsp (IdArmEsp)
-);
+CREATE TABLE Persona (
+    id_persona INT PRIMARY KEY,
+    id_grado INT,
+    id_armesp INT,
+    nombre VARCHAR (100),
+    apellido VARCHAR (100),
+    nro_dni VARCHAR (20),
+    FOREIGN KEY (id_grado) REFERENCES grado (id_grado),
+    FOREIGN KEY (id_armesp) REFERENCES armesp (id_armesp)
+);  
