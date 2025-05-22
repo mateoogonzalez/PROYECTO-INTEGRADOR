@@ -15,7 +15,7 @@ namespace Backend.Data
         public List<ArmEsp> Mostrar()
         {
             // Creamos una lista vacía donde vamos a guardar los grados que traemos desde la base de datos
-            List<ArmEsp> ArmEsp = new List<ArmEsp>(););
+            List<ArmEsp> ArmEsp = new List<ArmEsp>();
 
             // Usamos la conexión a la base de datos (se abre automáticamente y se cierra al terminar)
             using (var connection = AbrirConexion())
@@ -32,9 +32,9 @@ namespace Backend.Data
                             // Creamos un nuevo objeto de tipo ArmEsp con los datos obtenidos
                             ArmEsp.Add(new ArmEsp
                             {
-                                _id_armesp = reader.GetInt32("id_armesp"),
-                                _abreviatura = reader.GetString("abreviatura"),
-                                _armesp_completo = reader.GetString("armesp_completo")
+                                Id = reader.GetInt32("id_armesp"),
+                                Descripcion = reader.GetString("abreviatura"),
+                                ArmEspCompleto = reader.GetString("armesp_completo")
                             });
                         }
                     }

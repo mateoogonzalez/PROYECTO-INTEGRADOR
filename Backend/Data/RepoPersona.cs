@@ -30,12 +30,12 @@ namespace Backend.Data
                         while (reader.Read())
                         {
                             // Creamos un nuevo objeto de tipo Grado con los datos obtenidos
-                            personas.Add(new persona
+                            personas.Add(new Persona
                             {
-                                _id_persona = reader.GetInt32("id_persona"),
-                                _nombre = reader.GetString("nombre"),
-                                _apellido = reader.GetString("apellido")
-                                _nro_dni = reader.GetString("nro_dni")
+                                Id = reader.GetInt32("id_persona"),
+                                Nombre = reader.GetString("nombre"),
+                                Apellido = reader.GetString("apellido"),
+                                DNI = reader.GetString("nro_dni")
                             });
                         }
                     }

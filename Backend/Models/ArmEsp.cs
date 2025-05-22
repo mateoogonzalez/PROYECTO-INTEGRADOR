@@ -1,11 +1,11 @@
 using System;
 
-namespace MiAplicacion.Models
+namespace Backend.Models
 {
     public class ArmEsp
     {
         public int Id { get; set; }
-        public string ArmEsp { get; set; }
+        public string ArmEspCompleto { get; set; }
         public string Descripcion { get; set; }
     }
 }

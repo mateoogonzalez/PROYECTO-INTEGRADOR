@@ -32,9 +32,9 @@ namespace Backend.Data
                             // Creamos un nuevo objeto de tipo Grado con los datos obtenidos
                             grados.Add(new Grado
                             {
-                                _id_grado = reader.GetInt32("id_grado"),
-                                _abreviatura = reader.GetString("abreviatura"),
-                                _gradocompleto = reader.GetString("gradocompleto")
+                                Id = reader.GetInt32("id_grado"),
+                                Descripcion = reader.GetString("abreviatura"),
+                                GradoCompleto = reader.GetString("gradocompleto")
                             });
                         }
                     }
@@ -52,7 +52,7 @@ namespace Backend.Data
             using (var connection = AbrirConexion())
             {
                 // Creamos el comando SQL para insertar los datos (esta línea contiene un error: más abajo lo explico)
-                using (var command = new MySqlCommand("INSERT INTO grado (abreviatura, grado_completo) VALUES (@abreviatura, '@gradoCompleto') WHERE id_grado = @idGrado", connection))
+                using (var command = new MySqlCommand("INSERT INTO grado (abreviatura, gradocompleto) VALUES (@abreviatura, '@gradoCompleto') WHERE id_grado = @idGrado", connection))
                 {
                     // Asociamos los valores a los parámetros definidos en el comando SQL
                     command.Parameters.AddWithValue("@idGrado", idGrado);

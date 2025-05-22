@@ -22,7 +22,7 @@ namespace Backend.Data
 
             // Abrimos la conexión con la base de datos
             connection.Open();
-            console.log("conexion exitosa");
+            Console.WriteLine("conexion exitosa");
 
             // Devolvemos la conexión ya abierta para que se pueda usar en otra parte del programa
             return connection;

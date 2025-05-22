@@ -1,6 +1,6 @@
 using System;
 
-namespace MiAplicacion.Models
+namespace Backend.Models
 {
     public class Persona
     {
