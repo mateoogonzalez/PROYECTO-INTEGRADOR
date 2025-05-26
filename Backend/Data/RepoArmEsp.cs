@@ -44,5 +44,95 @@ namespace Backend.Data
             // Devolvemos la lista con todos las ArmEsp encontradas
             return ArmEsp;
         }
+
+        // Método para insertar un nuevo grado en la base de datos
+        public bool Insertars(int id_armesp, string abreviatura, string armesp_completo)
+        {
+            // Abrimos conexión con la base de datos
+            using (var connection = AbrirConexion())
+            {
+                // Creamos el comando SQL para insertar los datos (esta línea contiene un error: más abajo lo explico)
+                using (var command = new MySqlCommand("INSERT INTO armesp (id_armesp, abreviatura, armesp_completo) VALUES (@abreviatura, '@armesp_completo') WHERE id_armesp = @idarmesp", connection))
+                {
+                    // Asociamos los valores a los parámetros definidos en el comando SQL
+                    command.Parameters.AddWithValue("@idarmesp", id_armesp);
+                    command.Parameters.AddWithValue("@abreviatura", abreviatura);
+                    command.Parameters.AddWithValue("@armesp_completo", armesp_completo);
+
+                    try
+                    {
+                        // Ejecutamos el comando y obtenemos cuántas filas fueron afectadas
+                        int rowsAffected = command.ExecuteNonQuery();
+
+                        // Si se modificó al menos una fila, devolvemos verdadero (éxito)
+                        return rowsAffected > 0;
+                    }
+                    catch (MySqlException ex)
+                    {
+                        // Si hubo un error, lo mostramos en consola y devolvemos falso
+                        Console.WriteLine($"Error al modificar armesp: {ex.Message}");
+                        return false;
+                    }
+                }
+            }
+        }
+
+        // Método para modificar un grado existente en la base de datos
+        public bool Modificar(int id_armesp, string abreviatura, string armesp_completo)
+        {
+            // Abrimos conexión
+            using (var connection = AbrirConexion())
+            {
+                // Creamos el comando SQL para actualizar el registro que tenga el id indicado
+                using (var command = new MySqlCommand("UPDATE armesp SET id_armesp = @idarmesp, abreviatura = @abreviatura, armesp_completo = @armesp_completo WHERE id_armesp = @idarmesp", connection))
+                {
+                    // Asociamos los valores a los parámetros
+                    command.Parameters.AddWithValue("@idarmesp", id_armesp);
+                    command.Parameters.AddWithValue("@abreviatura", abreviatura);
+                    command.Parameters.AddWithValue("@armesp_completo", armesp_completo);
+
+                    try
+                    {
+                        // Ejecutamos el comando y vemos cuántas filas se modificaron
+                        int rowsAffected = command.ExecuteNonQuery();
+                        return rowsAffected > 0;
+                    }
+                    catch (MySqlException ex)
+                    {
+                        // Si hay error, lo mostramos y devolvemos falso
+                        Console.WriteLine($"Error al modificar armesp: {ex.Message}");
+                        return false;
+                    }
+                }
+            }
+        }
+
+        // Método para eliminar un grado de la base de datos
+        public bool Eliminar(int idarmesp)
+        {
+            // Abrimos conexión
+            using (var connection = AbrirConexion())
+            {
+                // Creamos el comando SQL para eliminar un grado según su id
+                using (var command = new MySqlCommand("DELETE FROM armesp WHERE id_armesp = @idarmesp", connection))
+                {
+                    // Asociamos el parámetro con el valor recibido
+                    command.Parameters.AddWithValue("@idarmesp", idarmesp);
+
+                    try
+                    {
+                        // Ejecutamos el comando y verificamos cuántas filas se eliminaron
+                        int rowsAffected = command.ExecuteNonQuery();
+                        return rowsAffected > 0;
+                    }
+                    catch (MySqlException ex)
+                    {
+                        // Si hay error, lo mostramos y devolvemos falso
+                        Console.WriteLine($"Error al eliminar armesp: {ex.Message}");
+                        return false;
+                    }
+                }
+            }
+        }
     }
 }

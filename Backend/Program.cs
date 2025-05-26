@@ -1,41 +1,43 @@
+// Usamos el espacio de nombres donde está definida la clase DB_Conexion
+using Backend.Data;
+
+// Creamos el "builder" de la aplicación web, que permite configurar servicios y middlewares
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+// Configuramos CORS (Cross-Origin Resource Sharing) para permitir solicitudes desde cualquier origen
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", // Definimos una política llamada "AllowAll"
+        policy =>
+        {
+            // Esta política permite cualquier origen, método y cabecera HTTP
+            policy.AllowAnyOrigin()
+                  .AllowAnyMethod()
+                  .AllowAnyHeader();
+        });
+});
 
+// Registramos el servicio de controladores (para usar [ApiController] y rutas con atributos)
+builder.Services.AddControllers();
+
+// Registramos la clase DB_Conexion como un singleton
+// Esto significa que se creará solo una instancia durante toda la vida de la aplicación
+builder.Services.AddSingleton<DB_Conexion>();
+
+// Construimos la aplicación con la configuración definida arriba
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
-{
+// Usamos la política de CORS que definimos anteriormente ("AllowAll")
+app.UseCors("AllowAll");
+
+// Redirige automáticamente las solicitudes HTTP a HTTPS si es posible
 app.UseHttpsRedirection();
-}
 
-// app.UseHttpsRedirection();
+// Middleware para manejar la autorización (aunque no haya autenticación configurada aún)
+app.UseAuthorization();
 
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
+// Mapea los controladores con sus rutas definidas ([Route], [HttpGet], etc.)
+app.MapControllers();
 
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast");
-
+// Ejecuta la aplicación
 app.Run();
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
